@@ -3027,28 +3027,6 @@ namespace lime {
 	}
 
 
-	int lime_system_get_windows_console_mode (int handleType) {
-
-		#if defined (HX_WINDOWS)
-		return System::GetWindowsConsoleMode (handleType);
-		#else
-		return 0;
-		#endif
-
-	}
-
-
-	HL_PRIM int HL_NAME(hl_system_get_windows_console_mode) (int handleType) {
-
-		#if defined (HX_WINDOWS)
-		return System::GetWindowsConsoleMode (handleType);
-		#else
-		return 0;
-		#endif
-
-	}
-
-
 	void lime_system_open_file (HxString path) {
 
 		System::OpenFile (path.c_str ());
@@ -3147,28 +3125,6 @@ namespace lime {
 	HL_PRIM void HL_NAME(hl_system_set_hint) (hl_vstring* key, hl_vstring* value) {
 
 		System::SetHint (key ? hl_to_utf8(key->bytes) : nullptr, value ? hl_to_utf8(value->bytes) : nullptr);
-
-	}
-
-
-	bool lime_system_set_windows_console_mode (int handleType, int mode) {
-
-		#if defined (HX_WINDOWS)
-		return System::SetWindowsConsoleMode (handleType, mode);
-		#else
-		return false;
-		#endif
-
-	}
-
-
-	HL_PRIM bool HL_NAME(hl_system_set_windows_console_mode) (int handleType, int mode) {
-
-		#if defined (HX_WINDOWS)
-		return System::SetWindowsConsoleMode (handleType, mode);
-		#else
-		return false;
-		#endif
 
 	}
 
@@ -4162,14 +4118,12 @@ namespace lime {
 	DEFINE_PRIME0 (lime_system_get_platform_name);
 	DEFINE_PRIME0 (lime_system_get_platform_version);
 	DEFINE_PRIME0 (lime_system_get_timer);
-	DEFINE_PRIME1 (lime_system_get_windows_console_mode);
 	DEFINE_PRIME1v (lime_system_open_file);
 	DEFINE_PRIME2v (lime_system_open_url);
 	DEFINE_PRIME1 (lime_system_set_allow_screen_timeout);
 	DEFINE_PRIME1 (lime_system_get_display_orientation);
 	DEFINE_PRIME1 (lime_system_get_hint);
 	DEFINE_PRIME2v (lime_system_set_hint);
-	DEFINE_PRIME2 (lime_system_set_windows_console_mode);
 	DEFINE_PRIME2v (lime_text_event_manager_register);
 	DEFINE_PRIME2v (lime_touch_event_manager_register);
 	DEFINE_PRIME5 (lime_window_alert);
@@ -4355,14 +4309,12 @@ namespace lime {
 	DEFINE_HL_PRIM (_BYTES, hl_system_get_platform_name, _NO_ARG);
 	DEFINE_HL_PRIM (_BYTES, hl_system_get_platform_version, _NO_ARG);
 	DEFINE_HL_PRIM (_F64, hl_system_get_timer, _NO_ARG);
-	DEFINE_HL_PRIM (_I32, hl_system_get_windows_console_mode, _I32);
 	DEFINE_HL_PRIM (_VOID, hl_system_open_file, _STRING);
 	DEFINE_HL_PRIM (_VOID, hl_system_open_url, _STRING _STRING);
 	DEFINE_HL_PRIM (_BOOL, hl_system_set_allow_screen_timeout, _BOOL);
 	DEFINE_HL_PRIM (_I32, hl_system_get_display_orientation, _I32);
 	DEFINE_HL_PRIM (_BYTES, hl_system_get_hint, _STRING);
 	DEFINE_HL_PRIM (_VOID, hl_system_set_hint, _STRING _STRING);
-	DEFINE_HL_PRIM (_BOOL, hl_system_set_windows_console_mode, _I32 _I32);
 	DEFINE_HL_PRIM (_VOID, hl_text_event_manager_register, _FUN (_VOID, _NO_ARG) _TTEXT_EVENT);
 	DEFINE_HL_PRIM (_VOID, hl_touch_event_manager_register, _FUN (_VOID, _NO_ARG) _TTOUCH_EVENT);
 	DEFINE_HL_PRIM (_I32, hl_window_alert, _TCFFIPOINTER _I32 _STRING _STRING _ARR);
