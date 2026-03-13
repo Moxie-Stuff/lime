@@ -316,8 +316,8 @@ class WindowsPlatform extends PlatformTarget
 		}
 		else
 		{
-			var haxeArgs = [hxml, "-D", "resourceFile=ApplicationMain.rc"];
-			var flags = ["-DresourceFile=ApplicationMain.rc"];
+			var haxeArgs = [hxml];
+			var flags = [];
 
 			if (is64)
 			{
@@ -342,8 +342,6 @@ class WindowsPlatform extends PlatformTarget
 				System.runCommand("", "haxe", haxeArgs);
 
 				if (noOutput) return;
-
-				IconHelper.createWindowsIcon(icons, Path.combine(targetDirectory + "/obj", "ApplicationMain.ico"));
 
 				CPPHelper.compile(project, targetDirectory + "/obj", flags);
 
@@ -372,8 +370,6 @@ class WindowsPlatform extends PlatformTarget
 				System.runCommand("", "haxe", haxeArgs.concat(["-D", "static_link"]));
 
 				if (noOutput) return;
-
-				IconHelper.createWindowsIcon(icons, Path.combine(targetDirectory + "/obj", "ApplicationMain.ico"));
 
 				CPPHelper.compile(project, targetDirectory + "/obj", flags.concat(["-Dstatic_link"]));
 
@@ -611,14 +607,9 @@ class WindowsPlatform extends PlatformTarget
 		ProjectHelper.recursiveSmartCopyTemplate(project, "haxe", targetDirectory + "/haxe", context);
 		ProjectHelper.recursiveSmartCopyTemplate(project, targetType + "/hxml", targetDirectory + "/haxe", context);
 
-		if (targetType == "cpp")
+		if (targetType == "cpp" && project.targetFlags.exists("static"))
 		{
-			ProjectHelper.recursiveSmartCopyTemplate(project, "windows/resource", targetDirectory + "/obj", context);
-
-			if (project.targetFlags.exists("static"))
-			{
-				ProjectHelper.recursiveSmartCopyTemplate(project, "cpp/static", targetDirectory + "/obj", context);
-			}
+			ProjectHelper.recursiveSmartCopyTemplate(project, "cpp/static", targetDirectory + "/obj", context);
 		}
 
 		/*if (IconHelper.createIcon (project.icons, 32, 32, Path.combine (applicationDirectory, "icon.png"))) {
